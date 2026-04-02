@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrendHunter — 인스타 인기 캐러셀 탐색기</title>
+  <title>TrendHunter — 바이럴 콘텐츠 탐색기</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -243,21 +243,88 @@
       color: #f472b6;
       font-weight: 600;
     }
+    /* 소스 탭 */
+    .source-wrap {
+      padding: 0 24px 20px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .source-label {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .source-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .src-btn {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 13px;
+      color: #777;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .src-btn:hover { border-color: #a78bfa; color: #a78bfa; }
+    .src-btn.active {
+      background: #a78bfa22;
+      border-color: #a78bfa;
+      color: #a78bfa;
+      font-weight: 600;
+    }
+    .src-badge {
+      font-size: 10px;
+      background: #a78bfa33;
+      color: #a78bfa;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .src-btn.active .src-badge {
+      background: #a78bfa55;
+    }
+    /* 검색 소스 표시 */
+    .source-tag {
+      font-size: 11px;
+      color: #555;
+      background: #1a1a1a;
+      border: 1px solid #252525;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
 
 <header>
   <div class="logo">Trend<span>Hunter</span></div>
-  <div style="font-size:13px;color:#555;">인스타 캐러셀 탐색기</div>
+  <div style="font-size:13px;color:#555;">바이럴 콘텐츠 탐색기</div>
 </header>
 
 <div class="search-wrap">
-  <h1>인기 캐러셀 찾기 🔍</h1>
-  <p>카테고리를 선택하거나 키워드로 검색하세요</p>
+  <h1>바이럴 콘텐츠 찾기 🔍</h1>
+  <p>소스·카테고리·기간을 선택하고 검색하세요</p>
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="예: 커플 소통, 자기계발, 팀 빌딩..." />
     <button onclick="doSearch()">검색</button>
+  </div>
+</div>
+
+<div class="source-wrap">
+  <div class="source-label">🌐 검색 소스</div>
+  <div class="source-tabs">
+    <button class="src-btn active" onclick="selectSource(this,'insta')">📸 인스타그램 <span class="src-badge">캐러셀</span></button>
+    <button class="src-btn" onclick="selectSource(this,'naver')">🟢 네이버 <span class="src-badge">카페·블로그</span></button>
+    <button class="src-btn" onclick="selectSource(this,'community')">💬 국내 커뮤니티 <span class="src-badge">DC·FM·더쿠</span></button>
+    <button class="src-btn" onclick="selectSource(this,'youtube')">▶️ 유튜브 <span class="src-badge">쇼츠·댓글</span></button>
+    <button class="src-btn" onclick="selectSource(this,'reddit')">👽 레딧 <span class="src-badge">해외</span></button>
+    <button class="src-btn" onclick="selectSource(this,'all')">🌍 전체 소스</button>
   </div>
 </div>
 
@@ -331,6 +398,23 @@
 
   let currentCat = 'all';
   let currentPeriod = '';
+  let currentSource = 'insta';
+
+  // 소스별 검색 쿼리 빌더
+  const SOURCE_CONFIG = {
+    insta:     { label: '인스타그램', suffix: 'site:instagram.com 캐러셀', direct: null },
+    naver:     { label: '네이버',     suffix: 'site:cafe.naver.com OR site:blog.naver.com', direct: null },
+    community: { label: '커뮤니티',   suffix: 'site:dcinside.com OR site:fmkorea.com OR site:theqoo.net OR site:instiz.net', direct: null },
+    youtube:   { label: '유튜브',     suffix: 'site:youtube.com', direct: null },
+    reddit:    { label: '레딧',       suffix: 'site:reddit.com', direct: null },
+    all:       { label: '전체',       suffix: '', direct: null },
+  };
+
+  function selectSource(el, src) {
+    document.querySelectorAll('.src-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentSource = src;
+  }
 
   // Google tbs 파라미터 매핑
   const PERIOD_TBS = {
@@ -365,14 +449,17 @@
     doSearch();
   }
 
-  function buildSearchUrl(query) {
-    let url = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+  function buildSearchUrl(baseQuery) {
+    const src = SOURCE_CONFIG[currentSource];
+    // 소스 suffix를 쿼리에 합침
+    const fullQuery = src.suffix ? baseQuery + ' ' + src.suffix : baseQuery;
+    let url = 'https://www.google.com/search?q=' + encodeURIComponent(fullQuery);
     const tbs = PERIOD_TBS[currentPeriod];
     if (tbs) url += '&tbs=' + tbs;
     return url;
   }
 
-  // 카드 클릭 시 현재 기간값을 실시간으로 반영
+  // 카드 클릭 시 현재 소스+기간 실시간 반영
   function openCard(e, el) {
     e.preventDefault();
     const q = el.getAttribute('data-q');
@@ -382,8 +469,9 @@
   function doSearch() {
     const input = document.getElementById('searchInput').value.trim();
     if (!input) return;
-    const query = input + ' 인스타그램 캐러셀 인기';
-    window.open(buildSearchUrl(query), '_blank');
+    // 소스가 인스타일 때만 캐러셀 suffix 추가, 나머지는 소스 suffix로 처리
+    const extra = currentSource === 'insta' ? ' 인기' : '';
+    window.open(buildSearchUrl(input + extra), '_blank');
   }
 
   function renderCards(cards) {
@@ -404,9 +492,9 @@
     count.innerHTML = '<strong>' + cards.length + '개</strong> 캐러셀 아이디어';
     list.innerHTML = cards.map(c => {
       const viralGrade = c.viral >= 95 ? '🔥 폭발' : c.viral >= 88 ? '⚡ 높음' : c.viral >= 78 ? '📈 보통' : '💤 낮음';
-      // href는 '#', data-q에 쿼리 저장 → 클릭 시점에 기간 반영
+      const srcLabel = SOURCE_CONFIG[currentSource].label;
       return '<a class="card" href="#" data-q="' + c.q + '" onclick="openCard(event,this)">' +
-      '<div class="card-top"><span class="card-cat">' + c.catLabel + '</span><span style="font-size:12px;color:#f472b6;font-weight:700;">' + viralGrade + '</span></div>' +
+      '<div class="card-top"><span class="card-cat">' + c.catLabel + '</span><div style="display:flex;gap:6px;align-items:center;"><span class="source-tag">' + srcLabel + '</span><span style="font-size:12px;color:#f472b6;font-weight:700;">' + viralGrade + '</span></div></div>' +
       '<h3>' + c.title + '</h3>' +
       '<p>' + c.desc + '</p>' +
       '<div class="metrics">' +
