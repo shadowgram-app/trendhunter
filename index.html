@@ -372,6 +372,13 @@
     return url;
   }
 
+  // 카드 클릭 시 현재 기간값을 실시간으로 반영
+  function openCard(e, el) {
+    e.preventDefault();
+    const q = el.getAttribute('data-q');
+    window.open(buildSearchUrl(q), '_blank');
+  }
+
   function doSearch() {
     const input = document.getElementById('searchInput').value.trim();
     if (!input) return;
@@ -396,9 +403,9 @@
     header.style.display = 'flex';
     count.innerHTML = '<strong>' + cards.length + '개</strong> 캐러셀 아이디어';
     list.innerHTML = cards.map(c => {
-      const url = buildSearchUrl(c.q);
       const viralGrade = c.viral >= 95 ? '🔥 폭발' : c.viral >= 88 ? '⚡ 높음' : c.viral >= 78 ? '📈 보통' : '💤 낮음';
-      return '<a class="card" href="' + url + '" target="_blank" rel="noopener">' +
+      // href는 '#', data-q에 쿼리 저장 → 클릭 시점에 기간 반영
+      return '<a class="card" href="#" data-q="' + c.q + '" onclick="openCard(event,this)">' +
       '<div class="card-top"><span class="card-cat">' + c.catLabel + '</span><span style="font-size:12px;color:#f472b6;font-weight:700;">' + viralGrade + '</span></div>' +
       '<h3>' + c.title + '</h3>' +
       '<p>' + c.desc + '</p>' +
