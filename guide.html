@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ViralVantage | 콘텐츠 제작 가이드</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-container": "#ff7f7f",
+                        "on-tertiary-fixed": "#40000f",
+                        "outline": "#747688",
+                        "surface-tint": "#124af0",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "secondary": "#a43a3d",
+                        "on-error": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-fixed-variant": "#91002d",
+                        "inverse-primary": "#b8c3ff",
+                        "surface": "#f8f9fa",
+                        "primary-container": "#2e5bff",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-fixed": "#ffdad8",
+                        "on-tertiary-container": "#ffecec",
+                        "tertiary-fixed": "#ffdadb",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-secondary-container": "#74161e",
+                        "on-primary-fixed": "#001356",
+                        "surface-container-high": "#e7e8e9",
+                        "on-surface-variant": "#434656",
+                        "background": "#f8f9fa",
+                        "on-primary-container": "#efefff",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-secondary": "#ffffff",
+                        "primary": "#0040e0",
+                        "secondary-fixed-dim": "#ffb3b1",
+                        "on-secondary-fixed": "#410007",
+                        "outline-variant": "#c4c5d9",
+                        "tertiary": "#ac0037",
+                        "error": "#ba1a1a",
+                        "on-surface": "#191c1d",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#cf274d",
+                        "tertiary-fixed-dim": "#ffb2b8",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-background": "#191c1d",
+                        "surface-dim": "#d9dadb",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-fixed-variant": "#842228"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #191c1d; }
+        .headline-font { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-panel { background: rgba(248, 249, 250, 0.7); backdrop-filter: blur(24px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center h-16 px-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-black tracking-tighter text-blue-700 dark:text-blue-500 headline-font">ViralVantage</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-blue-500 transition-colors" href="#">탐색</a>
+<a class="text-blue-600 dark:text-blue-400 font-bold border-b-2 border-blue-600 dark:border-blue-400 pb-1" href="#">트렌드</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-blue-500 transition-colors" href="#">아카이브</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-blue-500 transition-colors" href="#">튜토리얼</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="User Profile Avatar" class="w-10 h-10 rounded-full border-2 border-primary/10" data-alt="professional headshot of a creative director in a modern office setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4MPDq0ZaIHJ-g4vrceqVYrc8_1_m0yjGHPL4E50BLx34uW9sJ16_Mt-4n5N3MWtphnn5AlW7xEZAad0SF3Y0skZMFCfJDs5j7KPzWTRPq15UE5pD_Lhomn8dWZBapn7q4Z_DVR3O4MIQW606_zG19dBDC8J7-7lNgXNuOdOaxUdomB7dOQw9RhoDnkBp0nxCT4UMauN3Pe-BTHZWDE6oXTCof2aHbPb7_fRu2piYa7jRuTXFzCyhsYVlsHzhA9Go1rtLLfvyMMxNn"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-16 bg-slate-50 dark:bg-slate-950 flex flex-col p-4 space-y-2 overflow-y-auto">
+<div class="px-3 py-4">
+<h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500 headline-font">필터</h2>
+<p class="text-[10px] text-slate-400 mb-4">데이터 정밀 필터링</p>
+</div>
+<nav class="space-y-1">
+<button class="w-full flex items-center space-x-3 px-4 py-3 text-slate-500 hover:bg-slate-200 rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="restaurant">restaurant</span>
+<span class="text-xs font-semibold uppercase tracking-wider">푸드</span>
+</button>
+<button class="w-full flex items-center space-x-3 px-4 py-3 text-slate-500 hover:bg-slate-200 rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="style">style</span>
+<span class="text-xs font-semibold uppercase tracking-wider">패션</span>
+</button>
+<button class="w-full flex items-center space-x-3 px-4 py-3 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-lg shadow-sm transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="devices">devices</span>
+<span class="text-xs font-semibold uppercase tracking-wider">테크</span>
+</button>
+<button class="w-full flex items-center space-x-3 px-4 py-3 text-slate-500 hover:bg-slate-200 rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="explore">explore</span>
+<span class="text-xs font-semibold uppercase tracking-wider">여행</span>
+</button>
+<div class="pt-6 px-3">
+<h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500 headline-font">내 프로젝트</h2>
+</div>
+<button class="w-full flex items-center space-x-3 px-4 py-3 text-slate-500 hover:bg-slate-200 rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="folder">folder</span>
+<span class="text-xs font-semibold uppercase tracking-wider">여름 캠페인</span>
+</button>
+<button class="w-full flex items-center space-x-3 px-4 py-3 text-slate-500 hover:bg-slate-200 rounded-lg transition-all">
+<span class="material-symbols-outlined text-xl" data-icon="bookmark">bookmark</span>
+<span class="text-xs font-semibold uppercase tracking-wider">저장된 템플릿</span>
+</button>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen">
+<div class="max-w-7xl mx-auto p-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h1 class="text-4xl font-extrabold headline-font tracking-tight mb-2">콘텐츠 제작 가이드</h1>
+<p class="text-on-surface-variant text-lg">트렌드 문화 자산을 브랜드 맞춤형 콘텐츠로 전환하세요.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-full font-bold title-sm flex items-center gap-2 shadow-lg hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                    가이드를 PDF로 내보내기
+                </button>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Tools & Templates -->
+<div class="col-span-12 lg:col-span-7 space-y-8">
+<!-- Apply to My Brand Workspace -->
+<section class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<h2 class="text-xl font-bold headline-font">내 브랜드에 적용하기</h2>
+</div>
+<div class="flex bg-surface-container-low rounded-lg p-1 scale-90">
+<button class="px-3 py-1 rounded-md bg-white text-[10px] font-bold shadow-sm">국내 트렌드</button>
+<button class="px-3 py-1 rounded-md text-[10px] font-bold text-on-surface-variant">글로벌 트렌드</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">브랜드 명</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary py-3 px-4 placeholder:text-outline-variant" placeholder="예: 루모스 테크" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">산업 분야</label>
+<select class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary py-3 px-4 text-on-surface">
+<option>SaaS / 테크</option>
+<option>패션 &amp; 의류</option>
+<option>식음료</option>
+<option>웰니스</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Remix Guide: Step-by-Step -->
+<section class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-secondary" data-icon="rebase_edit">rebase_edit</span>
+<h2 class="text-xl font-bold headline-font">리믹스 가이드</h2>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex-none w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">1</div>
+<div>
+<h3 class="font-bold text-on-surface mb-1">트렌딩 사운드 선택</h3>
+<p class="text-sm text-on-surface-variant">현재 테크 섹션에서 45% 상승세를 보이고 있는 "Corporate Chill" 오디오 루프를 사용하세요.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-none w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">2</div>
+<div>
+<h3 class="font-bold text-on-surface mb-1">제품 삽입</h3>
+<p class="text-sm text-on-surface-variant">소프트웨어 대시보드를 밈의 초기 갈등을 해결하는 "영웅"으로 설정하세요.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-none w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">3</div>
+<div>
+<h3 class="font-bold text-on-surface mb-1">"결정적 한방" 적용</h3>
+<p class="text-sm text-on-surface-variant">아래 제공된 텍스트 오버레이 템플릿을 사용하여 문화적 연결을 완성하세요.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Template Suggestions -->
+<section class="bg-surface-container-low p-8 rounded-2xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-tertiary" data-icon="description">description</span>
+<h2 class="text-xl font-bold headline-font">템플릿 제안</h2>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-6 rounded-xl border-l-4 border-primary shadow-sm">
+<div class="flex justify-between items-center mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">비디오 스크립트</span>
+<button class="text-primary hover:opacity-70"><span class="material-symbols-outlined text-sm" data-icon="content_copy">content_copy</span></button>
+</div>
+<p class="text-sm italic text-on-surface-variant">"POV: [브랜드 명]을 썼더니 워크플로우가 드디어 의도한 대로 돌아갈 때."</p>
+</div>
+<div class="bg-white p-6 rounded-xl border-l-4 border-secondary shadow-sm">
+<div class="flex justify-between items-center mb-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary">인스타그램 캡션</span>
+<button class="text-secondary hover:opacity-70"><span class="material-symbols-outlined text-sm" data-icon="content_copy">content_copy</span></button>
+</div>
+<p class="text-sm italic text-on-surface-variant">"생각은 사치, [산업 분야] 효율성만이 살 길. 📈 #ViralVantage #효율성 #생산성"</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Preview Tool -->
+<div class="col-span-12 lg:col-span-5">
+<div class="sticky top-24 space-y-6">
+<div class="bg-surface-container-highest p-8 rounded-2xl flex flex-col items-center">
+<div class="flex items-center justify-between w-full mb-8">
+<h2 class="text-xl font-bold headline-font">미리보기 도구</h2>
+<div class="flex bg-surface-container-low rounded-full p-1">
+<button class="px-4 py-1.5 rounded-full bg-white text-xs font-bold shadow-sm">틱톡</button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-on-surface-variant">릴스</button>
+</div>
+</div>
+<!-- Phone Mockup -->
+<div class="relative w-72 h-[580px] bg-black rounded-[3rem] border-[8px] border-slate-900 shadow-2xl overflow-hidden">
+<!-- Status Bar -->
+<div class="absolute top-0 left-0 w-full h-8 flex justify-between items-center px-8 z-20">
+<span class="text-[10px] text-white font-medium">9:41</span>
+<div class="flex gap-1.5">
+<div class="w-3 h-1.5 bg-white/40 rounded-full"></div>
+<div class="w-3 h-1.5 bg-white/40 rounded-full"></div>
+</div>
+</div>
+<!-- Meme Content Image -->
+<img alt="TikTok Interface Mockup" class="w-full h-full object-cover" data-alt="vibrant abstract digital art with neon gradients and motion blur representing a high-energy viral social media post" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB54nm4HsqMaXQO_3T4YW4JRtXvooHDgZ4g3s_5n7pErF92U-gNQ35XtLt3OkjKuG02NnFps0bm-4W7mwSM0EtRnrR06o_JBXtZz2PbjdfZhmWSgvgrwf3dCFtnEjbrrLzkphGaNtLS1XwnAp6jZC2Gzp0eGaiP91_Y86Wzq98_gAmHkHF48TY-9_MzLqWBY8tXv5gpLgvDOHCUqOosWfeAfUHmKSXTcN0Y3liWJzEgZANs95x4gjihMP6o9F2J15XlpPE1ewe7LcAd"/>
+<!-- UI Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-6 space-y-4">
+<div class="glass-panel p-4 rounded-xl text-xs font-bold text-on-surface text-center mb-12">
+                                        POV: 루모스 테크를 썼더니 워크플로우가 드디어 제대로 돌아감.
+                                    </div>
+<div class="flex flex-col items-end gap-6 self-end mr-2">
+<div class="text-center"><span class="material-symbols-outlined text-white text-3xl" data-icon="favorite" data-weight="fill">favorite</span><p class="text-[10px] text-white font-bold">12.4K</p></div>
+<div class="text-center"><span class="material-symbols-outlined text-white text-3xl" data-icon="chat_bubble" data-weight="fill">chat_bubble</span><p class="text-[10px] text-white font-bold">452</p></div>
+<div class="text-center"><span class="material-symbols-outlined text-white text-3xl" data-icon="share" data-weight="fill">share</span><p class="text-[10px] text-white font-bold">공유</p></div>
+</div>
+<div class="text-white space-y-1">
+<p class="font-bold">@LumosTech</p>
+<p class="text-[10px] opacity-80">성공적인 문화 자산 활용. #효율성</p>
+</div>
+</div>
+</div>
+<p class="mt-8 text-xs text-on-surface-variant text-center max-w-[240px]">
+                                이 목업은 실제 피드에서 콘텐츠가 어떻게 보일지 생성된 시뮬레이션입니다.
+                            </p>
+</div>
+<!-- Trend Meter Component -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm">
+<h3 class="text-sm font-bold headline-font mb-4">예상 성과 분석</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-xs font-medium text-on-surface-variant">바이럴 확률</span>
+<span class="text-lg font-black text-primary headline-font">89%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary" style="width: 89%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t-0 mt-auto bg-white dark:bg-slate-900">
+<div class="bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center py-12 px-8 ml-64">
+<div class="mb-6 md:mb-0">
+<div class="text-lg font-bold text-slate-900 dark:text-white headline-font mb-2">ViralVantage</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 Inter">© 2024 ViralVantage. 고부가가치 문화 자산의 활용.</p>
+</div>
+<div class="flex space-x-8">
+<a class="text-sm text-slate-500 dark:text-slate-400 Inter hover:text-blue-500 transition-colors" href="#">개인정보 처리방침</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 Inter hover:text-blue-500 transition-colors" href="#">이용 약관</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 Inter hover:text-blue-500 transition-colors" href="#">API 문서</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 Inter hover:text-blue-500 transition-colors" href="#">고객 지원</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
