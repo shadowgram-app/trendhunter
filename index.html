@@ -152,6 +152,49 @@
       font-size: 12px;
       color: #a78bfa;
     }
+    /* 바이럴 지수 */
+    .metrics {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      min-width: 60px;
+    }
+    .metric-label {
+      font-size: 10px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .metric-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: #222;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .metric-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .metric-val {
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .bar-viral  { background: linear-gradient(90deg, #f472b6, #fb7185); }
+    .bar-save   { background: linear-gradient(90deg, #a78bfa, #818cf8); }
+    .bar-share  { background: linear-gradient(90deg, #34d399, #059669); }
+    .val-viral  { color: #f472b6; }
+    .val-save   { color: #a78bfa; }
+    .val-share  { color: #34d399; }
     .trending { margin-bottom: 32px; }
     .trending h2 { font-size: 13px; color: #666; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
     .trending-chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -168,6 +211,38 @@
     .chip:hover { border-color: #f472b6; color: #f472b6; }
     .empty { text-align: center; padding: 80px 0; color: #555; }
     .empty .big { font-size: 48px; margin-bottom: 16px; }
+    /* 기간 필터 */
+    .period-wrap {
+      padding: 0 24px 20px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .period-label {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .period-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .period-btn {
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #777;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .period-btn:hover { border-color: #f472b6; color: #f472b6; }
+    .period-btn.active {
+      background: #f472b622;
+      border-color: #f472b6;
+      color: #f472b6;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -193,6 +268,21 @@
   <button class="cat-btn" onclick="selectCat(this,'friend')">🤝 친구관계</button>
   <button class="cat-btn" onclick="selectCat(this,'family')">🏡 가족관계</button>
   <button class="cat-btn" onclick="selectCat(this,'team')">💼 팀 문화</button>
+</div>
+
+<div class="period-wrap">
+  <div class="period-label">📅 기간 필터 (검색 시 적용)</div>
+  <div class="period-chips">
+    <button class="period-btn active" onclick="selectPeriod(this,'')" >전체</button>
+    <button class="period-btn" onclick="selectPeriod(this,'d')">오늘</button>
+    <button class="period-btn" onclick="selectPeriod(this,'w')">이번 주</button>
+    <button class="period-btn" onclick="selectPeriod(this,'m')">이번 달</button>
+    <button class="period-btn" onclick="selectPeriod(this,'y')">올해</button>
+    <button class="period-btn" onclick="selectPeriod(this,'m3')">최근 3개월</button>
+    <button class="period-btn" onclick="selectPeriod(this,'m6')">최근 6개월</button>
+    <button class="period-btn" onclick="selectPeriod(this,'y2')">최근 2년</button>
+    <button class="period-btn" onclick="selectPeriod(this,'y3')">최근 3년</button>
+  </div>
 </div>
 
 <div class="results-wrap">
@@ -221,24 +311,45 @@
 </div>
 
 <script>
+  // viral: 바이럴 지수(0-100), save: 저장률, share: 공유 강도
   const CARDS = [
-    { cat:'self', catLabel:'자기계발', title:'매일 10분으로 바꾸는 아침 루틴 7가지', desc:'성공한 사람들의 아침을 분석한 캐러셀. 실천 가능한 작은 습관부터 단계별로 정리.', tags:['#아침루틴','#자기계발','#습관'], q:'아침루틴 자기계발 인스타그램 캐러셀' },
-    { cat:'self', catLabel:'자기계발', title:'자존감이 낮을 때 나타나는 신호 8가지', desc:'심리학 기반 자존감 체크리스트. 공감 유도형으로 저장률과 공유율이 높은 포맷.', tags:['#자존감','#심리','#멘탈케어'], q:'자존감 심리 인스타그램 캐러셀' },
-    { cat:'self', catLabel:'자기계발', title:'나쁜 습관을 끊는 과학적인 방법 5가지', desc:'뇌과학과 행동심리학을 쉽게 풀어낸 캐러셀. 정보 밀도가 높아 저장 유도 최적화.', tags:['#습관','#뇌과학','#자기계발'], q:'습관 뇌과학 인스타그램 캐러셀' },
-    { cat:'self', catLabel:'자기계발', title:'번아웃 전에 오는 경고 신호 6가지', desc:'현대인 공감형 정보 콘텐츠. 직장인·프리랜서 타깃으로 저장+공유 모두 높음.', tags:['#번아웃','#멘탈','#자기계발'], q:'번아웃 멘탈 인스타그램 캐러셀' },
-    { cat:'couple', catLabel:'커플소통', title:'연인과 싸울 때 절대 하면 안 되는 말 6가지', desc:'커플 갈등 상황의 언어 패턴 분석. 공감+실용 정보로 높은 저장률.', tags:['#커플','#연애','#소통'], q:'커플소통 갈등 인스타그램 캐러셀' },
-    { cat:'couple', catLabel:'커플소통', title:'애착 유형별 연애 스타일 완전 정리', desc:'회피형·불안형·안정형 애착 설명 캐러셀. 테스트 유도형으로 댓글 참여율 매우 높음.', tags:['#애착유형','#연애심리','#커플'], q:'애착유형 연애심리 인스타그램 캐러셀' },
-    { cat:'couple', catLabel:'커플소통', title:'오래가는 커플이 매일 하는 작은 습관들', desc:'장기 연애 커플의 소통 루틴. 따뜻한 톤으로 공유 유도에 최적화.', tags:['#장기연애','#커플루틴','#소통'], q:'장기연애 커플루틴 인스타그램 캐러셀' },
-    { cat:'friend', catLabel:'친구관계', title:'진짜 친구인지 아닌지 알 수 있는 신호', desc:'건강한 우정 vs toxic 관계 구분 기준. 공감 반응이 높아 저장 폭발.', tags:['#친구','#인간관계','#경계선'], q:'친구관계 인간관계 인스타그램 캐러셀' },
-    { cat:'friend', catLabel:'친구관계', title:'어른이 되면서 친구가 없어지는 이유', desc:'2030세대 공감 포인트를 건드리는 심리 콘텐츠. 댓글과 DM 유입이 많은 포맷.', tags:['#어른','#2030','#친구'], q:'어른 친구관계 2030 인스타그램 캐러셀' },
-    { cat:'family', catLabel:'가족관계', title:'부모님과 대화가 안 될 때 써먹는 말 5가지', desc:'세대 간 소통 방법을 현실적으로 풀어낸 캐러셀. 20-40대 공감형 콘텐츠.', tags:['#가족','#부모님','#소통'], q:'가족소통 부모님 인스타그램 캐러셀' },
-    { cat:'family', catLabel:'가족관계', title:'독립한 후 부모님과 사이가 좋아진 이유', desc:'독립 후 가족 관계 변화를 솔직하게 담은 스토리형 캐러셀. 저장+공유율 높음.', tags:['#독립','#가족','#관계변화'], q:'독립 가족관계 인스타그램 캐러셀' },
-    { cat:'team', catLabel:'팀 문화', title:'좋은 팀장이 절대 하지 않는 말 7가지', desc:'리더십 커뮤니케이션 캐러셀. 직장인 공감형으로 저장·공유 모두 높은 포맷.', tags:['#팀장','#리더십','#직장'], q:'리더십 팀소통 인스타그램 캐러셀' },
-    { cat:'team', catLabel:'팀 문화', title:'심리적 안전감이 높은 팀의 특징 6가지', desc:'구글 아리스토텔레스 연구를 쉽게 풀어낸 팀 문화 캐러셀. HR·스타트업 타깃 인기.', tags:['#심리적안전감','#팀문화','#조직'], q:'심리적안전감 팀문화 인스타그램 캐러셀' },
-    { cat:'team', catLabel:'팀 문화', title:'MZ세대가 퇴사를 결심하는 진짜 이유', desc:'세대 이해 기반의 조직 문화 콘텐츠. 리더·HR 담당자에게 높은 공유율.', tags:['#MZ','#퇴사','#팀문화'], q:'MZ세대 퇴사 팀문화 인스타그램 캐러셀' },
+    { cat:'self', catLabel:'자기계발', title:'매일 10분으로 바꾸는 아침 루틴 7가지', desc:'성공한 사람들의 아침을 분석한 캐러셀. 실천 가능한 작은 습관부터 단계별로 정리.', tags:['#아침루틴','#자기계발','#습관'], q:'아침루틴 자기계발 인스타그램 캐러셀', viral:91, save:88, share:74 },
+    { cat:'self', catLabel:'자기계발', title:'자존감이 낮을 때 나타나는 신호 8가지', desc:'심리학 기반 자존감 체크리스트. 공감 유도형으로 저장률과 공유율이 높은 포맷.', tags:['#자존감','#심리','#멘탈케어'], q:'자존감 심리 인스타그램 캐러셀', viral:95, save:93, share:81 },
+    { cat:'self', catLabel:'자기계발', title:'나쁜 습관을 끊는 과학적인 방법 5가지', desc:'뇌과학과 행동심리학을 쉽게 풀어낸 캐러셀. 정보 밀도가 높아 저장 유도 최적화.', tags:['#습관','#뇌과학','#자기계발'], q:'습관 뇌과학 인스타그램 캐러셀', viral:87, save:90, share:68 },
+    { cat:'self', catLabel:'자기계발', title:'번아웃 전에 오는 경고 신호 6가지', desc:'현대인 공감형 정보 콘텐츠. 직장인·프리랜서 타깃으로 저장+공유 모두 높음.', tags:['#번아웃','#멘탈','#자기계발'], q:'번아웃 멘탈 인스타그램 캐러셀', viral:89, save:85, share:79 },
+    { cat:'couple', catLabel:'커플소통', title:'연인과 싸울 때 절대 하면 안 되는 말 6가지', desc:'커플 갈등 상황의 언어 패턴 분석. 공감+실용 정보로 높은 저장률.', tags:['#커플','#연애','#소통'], q:'커플소통 갈등 인스타그램 캐러셀', viral:96, save:91, share:88 },
+    { cat:'couple', catLabel:'커플소통', title:'애착 유형별 연애 스타일 완전 정리', desc:'회피형·불안형·안정형 애착 설명 캐러셀. 테스트 유도형으로 댓글 참여율 매우 높음.', tags:['#애착유형','#연애심리','#커플'], q:'애착유형 연애심리 인스타그램 캐러셀', viral:98, save:94, share:92 },
+    { cat:'couple', catLabel:'커플소통', title:'오래가는 커플이 매일 하는 작은 습관들', desc:'장기 연애 커플의 소통 루틴. 따뜻한 톤으로 공유 유도에 최적화.', tags:['#장기연애','#커플루틴','#소통'], q:'장기연애 커플루틴 인스타그램 캐러셀', viral:84, save:82, share:86 },
+    { cat:'friend', catLabel:'친구관계', title:'진짜 친구인지 아닌지 알 수 있는 신호', desc:'건강한 우정 vs toxic 관계 구분 기준. 공감 반응이 높아 저장 폭발.', tags:['#친구','#인간관계','#경계선'], q:'친구관계 인간관계 인스타그램 캐러셀', viral:93, save:89, share:85 },
+    { cat:'friend', catLabel:'친구관계', title:'어른이 되면서 친구가 없어지는 이유', desc:'2030세대 공감 포인트를 건드리는 심리 콘텐츠. 댓글과 DM 유입이 많은 포맷.', tags:['#어른','#2030','#친구'], q:'어른 친구관계 2030 인스타그램 캐러셀', viral:90, save:78, share:91 },
+    { cat:'family', catLabel:'가족관계', title:'부모님과 대화가 안 될 때 써먹는 말 5가지', desc:'세대 간 소통 방법을 현실적으로 풀어낸 캐러셀. 20-40대 공감형 콘텐츠.', tags:['#가족','#부모님','#소통'], q:'가족소통 부모님 인스타그램 캐러셀', viral:86, save:83, share:77 },
+    { cat:'family', catLabel:'가족관계', title:'독립한 후 부모님과 사이가 좋아진 이유', desc:'독립 후 가족 관계 변화를 솔직하게 담은 스토리형 캐러셀. 저장+공유율 높음.', tags:['#독립','#가족','#관계변화'], q:'독립 가족관계 인스타그램 캐러셀', viral:82, save:80, share:75 },
+    { cat:'team', catLabel:'팀 문화', title:'좋은 팀장이 절대 하지 않는 말 7가지', desc:'리더십 커뮤니케이션 캐러셀. 직장인 공감형으로 저장·공유 모두 높은 포맷.', tags:['#팀장','#리더십','#직장'], q:'리더십 팀소통 인스타그램 캐러셀', viral:94, save:87, share:89 },
+    { cat:'team', catLabel:'팀 문화', title:'심리적 안전감이 높은 팀의 특징 6가지', desc:'구글 아리스토텔레스 연구를 쉽게 풀어낸 팀 문화 캐러셀. HR·스타트업 타깃 인기.', tags:['#심리적안전감','#팀문화','#조직'], q:'심리적안전감 팀문화 인스타그램 캐러셀', viral:88, save:84, share:72 },
+    { cat:'team', catLabel:'팀 문화', title:'MZ세대가 퇴사를 결심하는 진짜 이유', desc:'세대 이해 기반의 조직 문화 콘텐츠. 리더·HR 담당자에게 높은 공유율.', tags:['#MZ','#퇴사','#팀문화'], q:'MZ세대 퇴사 팀문화 인스타그램 캐러셀', viral:92, save:76, share:93 },
   ];
 
   let currentCat = 'all';
+  let currentPeriod = '';
+
+  // Google tbs 파라미터 매핑
+  const PERIOD_TBS = {
+    '':   '',
+    'd':  'qdr:d',
+    'w':  'qdr:w',
+    'm':  'qdr:m',
+    'y':  'qdr:y',
+    'm3': 'qdr:m3',
+    'm6': 'qdr:m6',
+    'y2': 'qdr:y2',
+    'y3': 'qdr:y3',
+  };
+
+  function selectPeriod(el, period) {
+    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentPeriod = period;
+  }
 
   function selectCat(el, cat) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -254,11 +365,18 @@
     doSearch();
   }
 
+  function buildSearchUrl(query) {
+    let url = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+    const tbs = PERIOD_TBS[currentPeriod];
+    if (tbs) url += '&tbs=' + tbs;
+    return url;
+  }
+
   function doSearch() {
     const input = document.getElementById('searchInput').value.trim();
     if (!input) return;
     const query = input + ' 인스타그램 캐러셀 인기';
-    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+    window.open(buildSearchUrl(query), '_blank');
   }
 
   function renderCards(cards) {
@@ -277,16 +395,35 @@
     empty.style.display = 'none';
     header.style.display = 'flex';
     count.innerHTML = '<strong>' + cards.length + '개</strong> 캐러셀 아이디어';
-    list.innerHTML = cards.map(c =>
-      '<a class="card" href="https://www.google.com/search?q=' + encodeURIComponent(c.q) + '" target="_blank" rel="noopener">' +
-      '<div class="card-top"><span class="card-cat">' + c.catLabel + '</span></div>' +
+    list.innerHTML = cards.map(c => {
+      const url = buildSearchUrl(c.q);
+      const viralGrade = c.viral >= 95 ? '🔥 폭발' : c.viral >= 88 ? '⚡ 높음' : c.viral >= 78 ? '📈 보통' : '💤 낮음';
+      return '<a class="card" href="' + url + '" target="_blank" rel="noopener">' +
+      '<div class="card-top"><span class="card-cat">' + c.catLabel + '</span><span style="font-size:12px;color:#f472b6;font-weight:700;">' + viralGrade + '</span></div>' +
       '<h3>' + c.title + '</h3>' +
       '<p>' + c.desc + '</p>' +
+      '<div class="metrics">' +
+        '<div class="metric" style="flex:1">' +
+          '<div class="metric-label">바이럴 지수</div>' +
+          '<div class="metric-bar-wrap"><div class="metric-bar bar-viral" style="width:' + c.viral + '%"></div></div>' +
+          '<div class="metric-val val-viral">' + c.viral + '</div>' +
+        '</div>' +
+        '<div class="metric" style="flex:1">' +
+          '<div class="metric-label">저장률</div>' +
+          '<div class="metric-bar-wrap"><div class="metric-bar bar-save" style="width:' + c.save + '%"></div></div>' +
+          '<div class="metric-val val-save">' + c.save + '</div>' +
+        '</div>' +
+        '<div class="metric" style="flex:1">' +
+          '<div class="metric-label">공유 강도</div>' +
+          '<div class="metric-bar-wrap"><div class="metric-bar bar-share" style="width:' + c.share + '%"></div></div>' +
+          '<div class="metric-val val-share">' + c.share + '</div>' +
+        '</div>' +
+      '</div>' +
       '<div class="card-footer">' +
       c.tags.map(t => '<span class="tag">' + t + '</span>').join('') +
       '<span class="open-link">검색 열기 →</span>' +
-      '</div></a>'
-    ).join('');
+      '</div></a>';
+    }).join('');
   }
 
   renderCards(CARDS);
