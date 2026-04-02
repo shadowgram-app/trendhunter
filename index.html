@@ -1,413 +1,298 @@
 <!DOCTYPE html>
-
-<html class="light" lang="ko"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ViralVantage | 고성과 문화 자본 분석</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "secondary-container": "#ff7f7f",
-                        "on-tertiary-fixed": "#40000f",
-                        "outline": "#747688",
-                        "surface-tint": "#124af0",
-                        "primary-fixed": "#dde1ff",
-                        "on-primary": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "on-error-container": "#93000a",
-                        "secondary": "#a43a3d",
-                        "on-error": "#ffffff",
-                        "surface-container": "#edeeef",
-                        "on-tertiary-fixed-variant": "#91002d",
-                        "inverse-primary": "#b8c3ff",
-                        "surface": "#f8f9fa",
-                        "primary-container": "#2e5bff",
-                        "surface-bright": "#f8f9fa",
-                        "secondary-fixed": "#ffdad8",
-                        "on-tertiary-container": "#ffecec",
-                        "tertiary-fixed": "#ffdadb",
-                        "on-primary-fixed-variant": "#0035be",
-                        "on-secondary-container": "#74161e",
-                        "on-primary-fixed": "#001356",
-                        "surface-container-high": "#e7e8e9",
-                        "on-surface-variant": "#434656",
-                        "background": "#f8f9fa",
-                        "on-primary-container": "#efefff",
-                        "primary-fixed-dim": "#b8c3ff",
-                        "on-secondary": "#ffffff",
-                        "primary": "#0040e0",
-                        "secondary-fixed-dim": "#ffb3b1",
-                        "on-secondary-fixed": "#410007",
-                        "outline-variant": "#c4c5d9",
-                        "tertiary": "#ac0037",
-                        "error": "#ba1a1a",
-                        "on-surface": "#191c1d",
-                        "surface-container-low": "#f3f4f5",
-                        "surface-container-lowest": "#ffffff",
-                        "tertiary-container": "#cf274d",
-                        "tertiary-fixed-dim": "#ffb2b8",
-                        "inverse-surface": "#2e3132",
-                        "surface-container-highest": "#e1e3e4",
-                        "on-background": "#191c1d",
-                        "surface-dim": "#d9dadb",
-                        "on-tertiary": "#ffffff",
-                        "inverse-on-surface": "#f0f1f2",
-                        "surface-variant": "#e1e3e4",
-                        "on-secondary-fixed-variant": "#842228"
-                    },
-                    fontFamily: {
-                        "headline": ["Plus Jakarta Sans", "system-ui"],
-                        "body": ["Inter", "system-ui"],
-                        "label": ["Inter", "system-ui"]
-                    },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
-                },
-            },
-        }
-    </script>
-<style>
-        body { font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background-color: #f8f9fa; color: #191c1d; }
-        .font-headline { font-family: 'Plus Jakarta Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .glass-effect { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e1e3e4; border-radius: 10px; }
-    </style>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrendHunter — 인스타 인기 캐러셀 탐색기</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+    header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1e1e1e;
+      position: sticky;
+      top: 0;
+      background: #0f0f0f;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .logo span { font-weight: 300; }
+    .search-wrap {
+      padding: 32px 24px 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .search-wrap h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    .search-wrap p { color: #888; font-size: 14px; margin-bottom: 20px; }
+    .search-box { display: flex; gap: 8px; }
+    .search-box input {
+      flex: 1;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 15px;
+      color: #f0f0f0;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus { border-color: #a78bfa; }
+    .search-box input::placeholder { color: #555; }
+    .search-box button {
+      background: linear-gradient(135deg, #a78bfa, #f472b6);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .search-box button:hover { opacity: 0.85; }
+    .categories {
+      padding: 0 24px 20px;
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .cat-btn {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #aaa;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-btn:hover, .cat-btn.active {
+      background: #a78bfa22;
+      border-color: #a78bfa;
+      color: #a78bfa;
+    }
+    .results-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+    .results-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .results-header h2 { font-size: 15px; color: #888; font-weight: 400; }
+    .results-header h2 strong { color: #f0f0f0; }
+    .card-list { display: flex; flex-direction: column; gap: 12px; }
+    .card {
+      background: #161616;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card:hover {
+      border-color: #a78bfa55;
+      background: #1a1a1a;
+      transform: translateY(-1px);
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .card-cat {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #a78bfa22;
+      color: #a78bfa;
+    }
+    .card h3 { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
+    .card p { font-size: 13px; color: #888; line-height: 1.6; }
+    .card-footer {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 12px;
+      color: #666;
+      background: #1e1e1e;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .open-link {
+      margin-left: auto;
+      font-size: 12px;
+      color: #a78bfa;
+    }
+    .trending { margin-bottom: 32px; }
+    .trending h2 { font-size: 13px; color: #666; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .trending-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 13px;
+      color: #ccc;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: #f472b6; color: #f472b6; }
+    .empty { text-align: center; padding: 80px 0; color: #555; }
+    .empty .big { font-size: 48px; margin-bottom: 16px; }
+  </style>
 </head>
-<body class="bg-surface text-on-surface overflow-x-hidden">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm flex justify-between items-center h-16 px-6 max-w-[1920px] mx-auto">
-<div class="flex items-center gap-8">
-<span class="text-2xl font-black tracking-tighter text-blue-700">ViralVantage</span>
-<div class="hidden md:flex items-center space-x-6">
-<a class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1 hover:text-blue-500 transition-colors" href="#">탐색</a>
-<a class="text-slate-500 font-medium hover:text-blue-500 transition-colors" href="#">트렌드</a>
-<a class="text-slate-500 font-medium hover:text-blue-500 transition-colors" href="#">아카이브</a>
-<a class="text-slate-500 font-medium hover:text-blue-500 transition-colors" href="#">가이드</a>
-</div>
-</div>
-<div class="flex items-center space-x-4">
-<!-- Source Toggle -->
-<div class="flex bg-slate-100 p-1 rounded-full border border-slate-200">
-<button class="px-3 py-1 text-xs font-bold rounded-full bg-white text-blue-600 shadow-sm">국내</button>
-<button class="px-3 py-1 text-xs font-medium text-slate-500 hover:text-blue-600 transition-colors">글로벌</button>
-</div>
-<div class="relative hidden sm:block">
-<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
-<input class="bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm w-48 lg:w-64 focus:ring-2 focus:ring-primary outline-none" placeholder="밈 검색..." type="text"/>
-</div>
-<button class="p-2 text-slate-500 hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30">
-<img alt="User Profile Avatar" data-alt="professional male portrait with neutral background, clean lighting, high resolution photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrpCukkrFPtVPDDp9BjeZBllw2ovlN9lwKS9AJLFeKNa_z_3EaO-dFdpDUeJEDgZkqlfb3wD810kCJTyPF4F9mctj488qfhXfbCj5Yr2I1Bg8KeVbAzIEq98ddCo3Qda3OIXGdk47FUpaXlanSvaUheoa-sbvoNNXBj5hBeQ1g2CzJISni3OKb4BRgObpyha4YYrsJnj2Fj9LCIaZRPLAvCTqRbpQCQEX9kEJQR_u5btGWztfG_SjMk2QTy_5vHBYIRLW4WeVluzqQ"/>
-</div>
-</div>
-</nav>
-<div class="flex pt-16">
-<!-- SideNavBar -->
-<aside class="h-screen w-64 fixed left-0 top-16 bg-slate-50 flex flex-col p-4 space-y-2 overflow-y-auto custom-scrollbar">
-<div class="px-3 py-4">
-<h3 class="font-headline font-extrabold text-xs uppercase tracking-wider text-slate-900">필터</h3>
-<p class="text-[10px] text-slate-500 font-medium mb-4">밈 데이터 정교화</p>
-</div>
-<nav class="space-y-1">
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">음식</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="style">style</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">패션</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="devices">devices</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">테크</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="explore">explore</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">여행</span>
-</a>
-<div class="h-px bg-slate-200 my-4"></div>
-<a class="flex items-center space-x-3 px-3 py-2 bg-white text-blue-600 rounded-lg shadow-sm transition-all duration-200 ease-in-out" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="face">face</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">Z세대</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="groups">groups</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">밀레니얼</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="person_3">person_3</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">X세대</span>
-</a>
-<div class="h-px bg-slate-200 my-4"></div>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="movie">movie</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">틱톡</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="camera">camera</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">인스타그램</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="play_circle">play_circle</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">유튜브</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="video_library">video_library</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">릴스</span>
-</a>
-<a class="flex items-center space-x-3 px-3 py-2 text-slate-500 hover:bg-slate-200 transition-all duration-200 ease-in-out group" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="post_add">post_add</span>
-<span class="text-xs font-semibold uppercase tracking-wider font-label">트위터</span>
-</a>
-</nav>
-</aside>
-<!-- Main Content Canvas -->
-<main class="ml-64 w-full p-8 bg-surface min-h-screen">
-<!-- Hero Section -->
-<section class="relative rounded-xl overflow-hidden mb-12 p-12 flex flex-col justify-center min-h-[400px]">
-<div class="absolute inset-0 z-0">
-<img class="w-full h-full object-cover opacity-10" data-alt="abstract dynamic background with fluid shapes in blue and magenta tones, grainy texture, modern digital art style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYNltT-GgtbgtNlUyrxl9sxEhk5RXzJLfiHp4PWjB8eIhSld-Az7wYFboLAn0e8UshOBEifgpcMwHj0TQTnMHfaFBwj6ROB2eOksHjJBkhIWaWT-5lcRHkyoC9QNHscc_rceAF1vOX8K9Vzcpnui7PCsaExegYin2NyATsh-7wLuXttaagltgLxi9HjpyfwhmRlT4GBdZ3grMRhAH7I5nB__24qULYFKAzg5H9lZeQ4kLwqGvbXn8WMub9pd8oS1NlZV5ntR4w-NI0"/>
-<div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
-</div>
-<div class="relative z-10 max-w-2xl">
-<span class="inline-block px-4 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant text-xs font-bold uppercase tracking-widest mb-6">실시간 문화 인사이트</span>
-<h1 class="font-headline text-5xl md:text-6xl font-black text-on-surface leading-[1.1] tracking-tighter mb-6">
-                        당신의 <span class="text-primary">비즈니스</span>를 위한 오늘 최고의 트렌드는?
-                    </h1>
-<p class="text-on-surface-variant text-lg mb-8 max-w-lg font-medium leading-relaxed">
-                        인터넷에서 가장 화제가 되는 템플릿을 업계별로 벤치마킹하세요. 단순한 포스팅이 아닌, 알고리즘을 압도하는 성과를 만듭니다.
-                    </p>
-<div class="flex flex-wrap gap-4">
-<button class="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-4 rounded-full font-headline font-bold text-sm shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
-                            현재 트렌드 탐색하기
-                        </button>
-<button class="bg-surface-container-highest text-on-primary-fixed-variant px-8 py-4 rounded-full font-headline font-bold text-sm hover:bg-surface-container-high transition-colors">
-                            내 업계 분석하기
-                        </button>
-</div>
-</div>
-</section>
-<!-- How To Use Banner (Horizontal Bento) -->
-<section class="mb-12 bg-surface-container-low rounded-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">insights</span>
-</div>
-<div>
-<h4 class="font-headline text-on-surface font-bold text-base mb-1">니치 시장 선택</h4>
-<p class="text-sm text-on-surface-variant leading-snug">15개 이상의 비즈니스 카테고리 중 반응이 좋은 분야를 선택하세요.</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
-</div>
-<div>
-<h4 class="font-headline text-on-surface font-bold text-base mb-1">점수 비교</h4>
-<p class="text-sm text-on-surface-variant leading-snug">실시간 참여 데이터를 기반으로 한 바이럴 확률 지표를 확인하세요.</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<div class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
-</div>
-<div>
-<h4 class="font-headline text-on-surface font-bold text-base mb-1">콘텐츠 배포</h4>
-<p class="text-sm text-on-surface-variant leading-snug">브랜드에 맞춤화된 템플릿과 크리에이티브 훅을 다운로드하세요.</p>
-</div>
-</div>
-</section>
-<!-- Main Meme Grid -->
-<div class="flex justify-between items-end mb-8">
-<div>
-<h2 class="font-headline text-3xl font-extrabold tracking-tight text-on-surface">일간 고성과 밈</h2>
-<p class="text-on-surface-variant font-medium mt-1">모든 플랫폼 통합, 4분 전 업데이트됨</p>
-</div>
-<div class="flex gap-2">
-<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-sm">grid_view</span>
-</button>
-<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-sm">sort</span>
-</button>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- Meme Card 1 -->
-<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-xl transition-all group">
-<div class="relative aspect-square rounded-lg overflow-hidden mb-4">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="funny orange cat wearing sunglasses on a beach, cinematic lighting, high contrast, vibrant summer colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCydRkLNWznom5xwWqLG5ozk4fla89Ax1oN0ySmHxI9hGI0R_UgSSGer-Lv9ri5OS0yAzUbpDl1K9ui0B7JKShQx-xr5C-YrBvYkkJWlRb1e2s0A2RUM6EDbErkpxjX7VugB3j2aoEfAgjYSN_vRfpm9c6W6avdXCP-9libRIxvSadKITHZ5Z_bPcsDWXleg2t8cIGnOJa2AOOEeDc860lKP2J04cvplwLD7QZLfOGT-AS186ZNrM6lp-izUtCKGp_1vpb_MrQo8ysw"/>
-<div class="absolute top-3 left-3 flex gap-1.5">
-<span class="bg-secondary text-white text-[10px] font-bold px-2 py-1 rounded-sm">고성과 콘텐츠</span>
-<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">movie</span> 틱톡
-                            </span>
-</div>
-</div>
-<h3 class="font-headline font-bold text-lg text-on-surface mb-2">"POV: 월요일 아침" 고양이</h3>
-<div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-container">
-<div>
-<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">바이럴 확률</p>
-<p class="font-headline text-2xl font-black text-primary">94%</p>
-</div>
-<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-</div>
-</div>
-<!-- Meme Card 2 -->
-<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-xl transition-all group">
-<div class="relative aspect-square rounded-lg overflow-hidden mb-4">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="retro aesthetic computer setup with neon grid lines and purple glowing lights, 80s vaporwave style photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU1Wl1A02DQEDTCafOBNc7gSSNAhvezxa0q89x0NR4BeH_tyzw6_9gxY0be8eNTJg8a9d4XNHMbAJOlqGzFLPv3NcebLLGqsAbhtTeYbTnFuHKcyjd-Lr4DcvhValU1iofdE8ELFnQklqUQfX3MSzFayvbjU2BU4hNU8awK3DWlB2s1uhxEmSp8BUouZfxHF9CNJiLk9QbEQ1RRGGLEELncx7aZkOCh_MHjniCr27EUK54ebmREmT19qhh09s4IB9hil5xnWa5MXap"/>
-<div class="absolute top-3 left-3 flex gap-1.5">
-<span class="bg-tertiary text-white text-[10px] font-bold px-2 py-1 rounded-sm">급상승 트렌드</span>
-<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">camera</span> 인스타그램
-                            </span>
-</div>
-</div>
-<h3 class="font-headline font-bold text-lg text-on-surface mb-2">빈티지 테크 부활</h3>
-<div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-container">
-<div>
-<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">바이럴 확률</p>
-<p class="font-headline text-2xl font-black text-primary">87%</p>
-</div>
-<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-</div>
-</div>
-<!-- Meme Card 3 -->
-<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-xl transition-all group">
-<div class="relative aspect-square rounded-lg overflow-hidden mb-4">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="close-up of a stylish motorcycle parked on a city street at night under neon signs, cinematic bokeh and reflection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACtWeGi3_8i3p6XX7D4UngvovuInKy3FUM3Kd8sd4TB5FzEsrAwq31LIemo17TPdjVQWTqb_fR7r-AAMSedHTlK7_ys8YNG1LCShtYY-YGysVK4JAxQlEGvzI8dg4As3HKDSaqaESLAOXygQSLS-E7-iDfGynOQxIpjx3XeM8F1pwJTJ-7ic4GuQSpSk6VOXPuTBbH-9XFbYRi_AA0wwF-eBPbS2nU1suOVHjtkKsdNrLIq6F1ij--kWZkr3ACXHRVqQObzOIZm5Io"/>
-<div class="absolute top-3 left-3 flex gap-1.5">
-<span class="bg-secondary text-white text-[10px] font-bold px-2 py-1 rounded-sm">고성과 콘텐츠</span>
-<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">play_circle</span> 릴스
-                            </span>
-</div>
-</div>
-<h3 class="font-headline font-bold text-lg text-on-surface mb-2">스트릿 스타일 감성</h3>
-<div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-container">
-<div>
-<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">바이럴 확률</p>
-<p class="font-headline text-2xl font-black text-primary">82%</p>
-</div>
-<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-</div>
-</div>
-<!-- Meme Card 4 -->
-<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-xl transition-all group">
-<div class="relative aspect-square rounded-lg overflow-hidden mb-4">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="modern abstract digital data visualization with flowing lines and glowing particles on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzfSt2RAojOm9NjC3ehpG2mlI4Nnj94q4gCK8ADarvY7igjptZnWfMgvvFH6ODRojmvUoaYVy2rZbKLau1rqtaEKHYf-x9zkq9MFHm6UJbhvxA2bpVQlxYxNuogEjHqe4b-xGRelp7K3UPTSynVeey3LqhVrbeIDaP7sRON6GVUUFko6KywTSraFz5ISLHvWcvd3fdIVRrs6yzUSC7PM_ni2YUlDVopPrjpgTD7Yw2N2xCORCHJZ_LIc4Hg7m2P_oAGFTsh45NScjY"/>
-<div class="absolute top-3 left-3 flex gap-1.5">
-<span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-sm">니치 타겟팅</span>
-<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">post_add</span> 트위터
-                            </span>
-</div>
-</div>
-<h3 class="font-headline font-bold text-lg text-on-surface mb-2">개발자의 "일상 분투기" 스레드</h3>
-<div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-container">
-<div>
-<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">바이럴 확률</p>
-<p class="font-headline text-2xl font-black text-primary">76%</p>
-</div>
-<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-</div>
-</div>
-<!-- Meme Card 5 -->
-<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-xl transition-all group">
-<div class="relative aspect-square rounded-lg overflow-hidden mb-4">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="bright and colorful healthy breakfast spread on a white table with sunlight streaming in, top down perspective" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMQsjjCkORwBLmnjYXfw5rwwtuwdaG99yUaSB32z9ZVgE7DRUEfteRubP69UWkRioyTXQpuToE_4hAq7PKPBRiOQDEcvM6oqpmmkaCU0G_WFzEbLobusJXzW5Y0opPFHvwd_7IVuJ60rxvKmgKauftx3YPcScnnRYAWPl78BtHjT7BegykgwbmpjrzF_fzm4mIWzbBX3tyQ_RkifFPCwCKlRDKjwNUCVvdslndn0tjWqDdHYVaGrXHkDV7fcYZv7st0Ve6wn4MKaMT"/>
-<div class="absolute top-3 left-3 flex gap-1.5">
-<span class="bg-secondary text-white text-[10px] font-bold px-2 py-1 rounded-sm">고성과 콘텐츠</span>
-<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">camera</span> 인스타그램
-                            </span>
-</div>
-</div>
-<h3 class="font-headline font-bold text-lg text-on-surface mb-2">모닝 루틴의 현실</h3>
-<div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-container">
-<div>
-<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">바이럴 확률</p>
-<p class="font-headline text-2xl font-black text-primary">91%</p>
-</div>
-<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-</div>
-</div>
-<!-- Meme Card 6 -->
-<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm hover:shadow-xl transition-all group">
-<div class="relative aspect-square rounded-lg overflow-hidden mb-4">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="hand typing on a laptop with lines of code reflected on a glass surface, futuristic workspace lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAanfxP3_t5kCgni_QrAUsy-dHNFeLoec6xCdrVvBocy2oKQg4E1H2AicQtKReAdRHIz3Q6L_l1BUPTIxEg7Tq8kw3zX1K8mIvsJ__AbdzCgcQuuxfviAFdrMch4yGiFdsTuiaeslcPjdWwAsMErBmjQOdSt7Xe37_gbusNlpdq7JQ_ntZ1DYUz9h5zsk009lWtMSwTw3BuPAgp7Mh8gNWNPwuuPeqTnZQvLEloLLh84Vrs2RMOYSEL0popvgfFgJx97dFVduM20gKv"/>
-<div class="absolute top-3 left-3 flex gap-1.5">
-<span class="bg-tertiary text-white text-[10px] font-bold px-2 py-1 rounded-sm">급상승 트렌드</span>
-<span class="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-sm flex items-center gap-1">
-<span class="material-symbols-outlined text-[12px]">movie</span> 틱톡
-                            </span>
-</div>
-</div>
-<h3 class="font-headline font-bold text-lg text-on-surface mb-2">재택근무 생산성 팁</h3>
-<div class="flex items-center justify-between mt-4 pt-4 border-t border-surface-container">
-<div>
-<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">바이럴 확률</p>
-<p class="font-headline text-2xl font-black text-primary">95%</p>
-</div>
-<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Float Action Signature Component -->
-<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
-<div class="bg-white/70 backdrop-blur-xl border border-white/50 px-6 py-3 rounded-full shadow-2xl flex items-center gap-6">
-<button class="flex items-center gap-2 text-primary font-bold text-sm">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                        대시보드
-                    </button>
-<div class="w-px h-4 bg-slate-200"></div>
-<button class="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-bold text-sm">
-<span class="material-symbols-outlined">history</span>
-                        벤치마크
-                    </button>
-<div class="w-px h-4 bg-slate-200"></div>
-<button class="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-bold text-sm">
-<span class="material-symbols-outlined">auto_awesome</span>
-                        AI 훅 생성기
-                    </button>
-</div>
-</div>
-<!-- Footer -->
-<footer class="w-full border-t-0 mt-24 bg-white flex flex-col md:flex-row justify-between items-center py-12 px-8">
-<div class="mb-8 md:mb-0">
-<span class="text-lg font-bold text-slate-900">ViralVantage</span>
-<p class="text-sm text-slate-500 mt-2">© 2024 ViralVantage. High-Stakes Cultural Capital.</p>
-</div>
-<div class="flex flex-wrap justify-center gap-8">
-<a class="text-sm text-slate-400 hover:text-blue-500 transition-colors" href="#">개인정보 처리방침</a>
-<a class="text-sm text-slate-400 hover:text-blue-500 transition-colors" href="#">이용약관</a>
-<a class="text-sm text-slate-400 hover:text-blue-500 transition-colors" href="#">API 문서</a>
-<a class="text-sm text-slate-400 hover:text-blue-500 transition-colors" href="#">고객지원</a>
-</div>
-</footer>
-</main>
-</div>
-</body></html>
+<body>
+
+<header>
+  <div class="logo">Trend<span>Hunter</span></div>
+  <div style="font-size:13px;color:#555;">인스타 캐러셀 탐색기</div>
+</header>
+
+<div class="search-wrap">
+  <h1>인기 캐러셀 찾기 🔍</h1>
+  <p>카테고리를 선택하거나 키워드로 검색하세요</p>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="예: 커플 소통, 자기계발, 팀 빌딩..." />
+    <button onclick="doSearch()">검색</button>
+  </div>
+</div>
+
+<div class="categories">
+  <button class="cat-btn active" onclick="selectCat(this,'all')">✨ 전체</button>
+  <button class="cat-btn" onclick="selectCat(this,'self')">🌱 자기계발</button>
+  <button class="cat-btn" onclick="selectCat(this,'couple')">💑 커플소통</button>
+  <button class="cat-btn" onclick="selectCat(this,'friend')">🤝 친구관계</button>
+  <button class="cat-btn" onclick="selectCat(this,'family')">🏡 가족관계</button>
+  <button class="cat-btn" onclick="selectCat(this,'team')">💼 팀 문화</button>
+</div>
+
+<div class="results-wrap">
+  <div class="trending" id="trendingSection">
+    <h2>🔥 인기 검색어</h2>
+    <div class="trending-chips">
+      <span class="chip" onclick="quickSearch('커플 갈등 해결')">커플 갈등 해결</span>
+      <span class="chip" onclick="quickSearch('자존감 높이기')">자존감 높이기</span>
+      <span class="chip" onclick="quickSearch('직장 인간관계')">직장 인간관계</span>
+      <span class="chip" onclick="quickSearch('아침 루틴')">아침 루틴</span>
+      <span class="chip" onclick="quickSearch('감정 표현')">감정 표현</span>
+      <span class="chip" onclick="quickSearch('팀 소통')">팀 소통</span>
+      <span class="chip" onclick="quickSearch('부모님과 대화')">부모님과 대화</span>
+      <span class="chip" onclick="quickSearch('나쁜 습관 고치기')">나쁜 습관 고치기</span>
+    </div>
+  </div>
+
+  <div id="resultsHeader" class="results-header" style="display:none;">
+    <h2 id="resultsCount"></h2>
+  </div>
+  <div id="resultsList" class="card-list"></div>
+  <div id="emptyEl" class="empty" style="display:none;">
+    <div class="big">🔍</div>
+    <p>검색 결과가 없어요.</p>
+  </div>
+</div>
+
+<script>
+  const CARDS = [
+    { cat:'self', catLabel:'자기계발', title:'매일 10분으로 바꾸는 아침 루틴 7가지', desc:'성공한 사람들의 아침을 분석한 캐러셀. 실천 가능한 작은 습관부터 단계별로 정리.', tags:['#아침루틴','#자기계발','#습관'], q:'아침루틴 자기계발 인스타그램 캐러셀' },
+    { cat:'self', catLabel:'자기계발', title:'자존감이 낮을 때 나타나는 신호 8가지', desc:'심리학 기반 자존감 체크리스트. 공감 유도형으로 저장률과 공유율이 높은 포맷.', tags:['#자존감','#심리','#멘탈케어'], q:'자존감 심리 인스타그램 캐러셀' },
+    { cat:'self', catLabel:'자기계발', title:'나쁜 습관을 끊는 과학적인 방법 5가지', desc:'뇌과학과 행동심리학을 쉽게 풀어낸 캐러셀. 정보 밀도가 높아 저장 유도 최적화.', tags:['#습관','#뇌과학','#자기계발'], q:'습관 뇌과학 인스타그램 캐러셀' },
+    { cat:'self', catLabel:'자기계발', title:'번아웃 전에 오는 경고 신호 6가지', desc:'현대인 공감형 정보 콘텐츠. 직장인·프리랜서 타깃으로 저장+공유 모두 높음.', tags:['#번아웃','#멘탈','#자기계발'], q:'번아웃 멘탈 인스타그램 캐러셀' },
+    { cat:'couple', catLabel:'커플소통', title:'연인과 싸울 때 절대 하면 안 되는 말 6가지', desc:'커플 갈등 상황의 언어 패턴 분석. 공감+실용 정보로 높은 저장률.', tags:['#커플','#연애','#소통'], q:'커플소통 갈등 인스타그램 캐러셀' },
+    { cat:'couple', catLabel:'커플소통', title:'애착 유형별 연애 스타일 완전 정리', desc:'회피형·불안형·안정형 애착 설명 캐러셀. 테스트 유도형으로 댓글 참여율 매우 높음.', tags:['#애착유형','#연애심리','#커플'], q:'애착유형 연애심리 인스타그램 캐러셀' },
+    { cat:'couple', catLabel:'커플소통', title:'오래가는 커플이 매일 하는 작은 습관들', desc:'장기 연애 커플의 소통 루틴. 따뜻한 톤으로 공유 유도에 최적화.', tags:['#장기연애','#커플루틴','#소통'], q:'장기연애 커플루틴 인스타그램 캐러셀' },
+    { cat:'friend', catLabel:'친구관계', title:'진짜 친구인지 아닌지 알 수 있는 신호', desc:'건강한 우정 vs toxic 관계 구분 기준. 공감 반응이 높아 저장 폭발.', tags:['#친구','#인간관계','#경계선'], q:'친구관계 인간관계 인스타그램 캐러셀' },
+    { cat:'friend', catLabel:'친구관계', title:'어른이 되면서 친구가 없어지는 이유', desc:'2030세대 공감 포인트를 건드리는 심리 콘텐츠. 댓글과 DM 유입이 많은 포맷.', tags:['#어른','#2030','#친구'], q:'어른 친구관계 2030 인스타그램 캐러셀' },
+    { cat:'family', catLabel:'가족관계', title:'부모님과 대화가 안 될 때 써먹는 말 5가지', desc:'세대 간 소통 방법을 현실적으로 풀어낸 캐러셀. 20-40대 공감형 콘텐츠.', tags:['#가족','#부모님','#소통'], q:'가족소통 부모님 인스타그램 캐러셀' },
+    { cat:'family', catLabel:'가족관계', title:'독립한 후 부모님과 사이가 좋아진 이유', desc:'독립 후 가족 관계 변화를 솔직하게 담은 스토리형 캐러셀. 저장+공유율 높음.', tags:['#독립','#가족','#관계변화'], q:'독립 가족관계 인스타그램 캐러셀' },
+    { cat:'team', catLabel:'팀 문화', title:'좋은 팀장이 절대 하지 않는 말 7가지', desc:'리더십 커뮤니케이션 캐러셀. 직장인 공감형으로 저장·공유 모두 높은 포맷.', tags:['#팀장','#리더십','#직장'], q:'리더십 팀소통 인스타그램 캐러셀' },
+    { cat:'team', catLabel:'팀 문화', title:'심리적 안전감이 높은 팀의 특징 6가지', desc:'구글 아리스토텔레스 연구를 쉽게 풀어낸 팀 문화 캐러셀. HR·스타트업 타깃 인기.', tags:['#심리적안전감','#팀문화','#조직'], q:'심리적안전감 팀문화 인스타그램 캐러셀' },
+    { cat:'team', catLabel:'팀 문화', title:'MZ세대가 퇴사를 결심하는 진짜 이유', desc:'세대 이해 기반의 조직 문화 콘텐츠. 리더·HR 담당자에게 높은 공유율.', tags:['#MZ','#퇴사','#팀문화'], q:'MZ세대 퇴사 팀문화 인스타그램 캐러셀' },
+  ];
+
+  let currentCat = 'all';
+
+  function selectCat(el, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    currentCat = cat;
+    const filtered = cat === 'all' ? CARDS : CARDS.filter(c => c.cat === cat);
+    renderCards(filtered);
+    document.getElementById('trendingSection').style.display = 'none';
+  }
+
+  function quickSearch(q) {
+    document.getElementById('searchInput').value = q;
+    doSearch();
+  }
+
+  function doSearch() {
+    const input = document.getElementById('searchInput').value.trim();
+    if (!input) return;
+    const query = input + ' 인스타그램 캐러셀 인기';
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+  }
+
+  function renderCards(cards) {
+    const list = document.getElementById('resultsList');
+    const header = document.getElementById('resultsHeader');
+    const count = document.getElementById('resultsCount');
+    const empty = document.getElementById('emptyEl');
+    document.getElementById('trendingSection').style.display = 'none';
+
+    if (!cards.length) {
+      list.innerHTML = '';
+      header.style.display = 'none';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    header.style.display = 'flex';
+    count.innerHTML = '<strong>' + cards.length + '개</strong> 캐러셀 아이디어';
+    list.innerHTML = cards.map(c =>
+      '<a class="card" href="https://www.google.com/search?q=' + encodeURIComponent(c.q) + '" target="_blank" rel="noopener">' +
+      '<div class="card-top"><span class="card-cat">' + c.catLabel + '</span></div>' +
+      '<h3>' + c.title + '</h3>' +
+      '<p>' + c.desc + '</p>' +
+      '<div class="card-footer">' +
+      c.tags.map(t => '<span class="tag">' + t + '</span>').join('') +
+      '<span class="open-link">검색 열기 →</span>' +
+      '</div></a>'
+    ).join('');
+  }
+
+  renderCards(CARDS);
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doSearch();
+  });
+</script>
+</body>
+</html>
